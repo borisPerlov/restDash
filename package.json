@@ -1,0 +1,22 @@
+{
+  "name": "resta",
+  "description": "",
+  "scripts": {
+    "start": "ui5 serve --config=ui5.yaml -o index.html?sap-language=HE",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@ui5/cli": "^2.10.3",
+    "eslint": "^7.18.0",
+    "ui5-middleware-livereload": "^0.5.1",
+    "ui5-middleware-route": "^1.0.4",
+    "ui5-middleware-route-proxy": "^1.0.9"
+  },
+  "ui5": {
+    "dependencies": [
+      "ui5-middleware-livereload",
+      "ui5-middleware-route-proxy"
+    ]
+  },
+  "dependencies": {}
+}

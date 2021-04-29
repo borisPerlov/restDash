@@ -1,0 +1,78 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+>
+	<Table 
+    id="products"
+    items="{
+			path: 'createPoView>/ProductCollection'
+			
+		}">
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+                    	<SearchField liveChange=".onSearchProducts" width="100%" />
+				</content>
+			</OverflowToolbar>
+		</headerToolbar> 
+		<columns>
+			<Column width="12em">
+				<Text text="ProductId"/>
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true"
+			>
+				<Text text="Supplier"/>
+			</Column>
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="End"
+			>
+				<Text text="Dimensions"/>
+			</Column>
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center"
+			>
+				<Text text="Weight"/>
+			</Column>
+			<Column hAlign="End">
+				<Text text="Price"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier
+						title="{createPoView>Description}"
+						text="{createPoView>ProductId}"
+					/>
+					<Text text="{createPoView>SupplierName}"/>
+					<Text text="{Width} x {Depth} x {Height} {DimUnit}"/>
+					<ObjectNumber
+						number="{WeightMeasure}"
+						unit="{WeightUnit}"
+						state="{
+							parts: [
+								{path: 'WeightMeasure'},
+								{path: 'WeightUnit'}
+							],
+							formatter: 'sap.m.sample.Table.Formatter.weightState'
+						}"
+					/>
+					<ObjectNumber
+						number="{
+								parts:[{path:'createPoView>Price'},{path:'createPoView>CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+						unit="{createPoView>CurrencyCode}"
+					/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

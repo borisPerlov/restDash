@@ -1,0 +1,16 @@
+
+    {
+    "base": "./webapp",
+    "conn_usestrictssl" : false,
+    "conn_server": "http://dsapgwtlvnta1.nta.local:8000",
+    "conn_client" : "200",
+    "conn_user": "borisp",
+    "conn_password": "wsx12345!",
+    "abap_package": "Z_MERGE_PDF",
+    "abap_bsp": "Z_MERGE_PDF",
+     "abap_bsp_text": "Reuse component for merge docs",
+     "abap_transport" : "GWDK904466",
+     "abap_language" : "EN",
+     "calcappindex"  : true
+    }
+    

@@ -2,37 +2,43 @@
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 >
-	<Table 
-    id="products"
-    items="{
+	<Table
+		id="products"
+		items="{
 			path: 'createPoView>/ProductCollection'
 			
-		}">
+		}"
+	>
 		<headerToolbar>
 			<OverflowToolbar>
 				<content>
-                    	<SearchField liveChange=".onSearchProducts" width="100%" />
+					<SearchField
+						liveChange=".onSearchProducts"
+						width="100%"
+					/>
 				</content>
 			</OverflowToolbar>
-		</headerToolbar> 
+		</headerToolbar>
 		<columns>
 			<Column width="12em">
-				<Text text="ProductId"/>
+				<Text text="ProductDesc"/>
 			</Column>
-			<Column
-				minScreenWidth="Tablet"
-				demandPopin="true"
-			>
-				<Text text="Supplier"/>
+			<!-- minScreenWidth="Tablet"
+				demandPopin="true" -->
+			<Column>
+				<Text text="SupplierName"/>
 			</Column>
-			<Column
+			<Column>
+				<Text text="Quantity"/>
+			</Column>
+			<!-- <Column
 				minScreenWidth="Desktop"
 				demandPopin="true"
 				hAlign="End"
 			>
 				<Text text="Dimensions"/>
-			</Column>
-			<Column
+			</Column> -->
+			<!-- <Column
 				minScreenWidth="Desktop"
 				demandPopin="true"
 				hAlign="Center"
@@ -41,18 +47,25 @@
 			</Column>
 			<Column hAlign="End">
 				<Text text="Price"/>
-			</Column>
+			</Column> -->
 		</columns>
 		<items>
 			<ColumnListItem>
 				<cells>
-					<ObjectIdentifier
+					<!-- <ObjectIdentifier
 						title="{createPoView>Description}"
 						text="{createPoView>ProductId}"
-					/>
+					/> -->
+					<Text text="{createPoView>Description}"/>
 					<Text text="{createPoView>SupplierName}"/>
-					<Text text="{Width} x {Depth} x {Height} {DimUnit}"/>
-					<ObjectNumber
+					<Input
+						type="Number"
+						placeholder="fill quantity"
+						value=""
+
+					>
+					</Input>
+					<!-- <ObjectNumber
 						number="{WeightMeasure}"
 						unit="{WeightUnit}"
 						state="{
@@ -70,7 +83,7 @@
 								formatOptions: {showMeasure: false}
 							}"
 						unit="{createPoView>CurrencyCode}"
-					/>
+					/> -->
 				</cells>
 			</ColumnListItem>
 		</items>

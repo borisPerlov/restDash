@@ -21,6 +21,18 @@ sap.ui.define([
 
         },
 
+        onStorageSelected: function () {
+            debugger;
+            var oWizard = this.getView().byId("CreatePoWizard");
+
+            //next step
+            oWizard.nextStep();
+
+            //
+
+
+        },
+
         onSearchProducts: function (oEvent) {
             debugger;
             // build filter array
@@ -28,6 +40,7 @@ sap.ui.define([
             var sQuery = oEvent.getParameter("newValue");
             if (sQuery) {
                 aFilter.push(new Filter("Description", FilterOperator.Contains, sQuery));
+                aFilter.push(new Filter("SupplierName", FilterOperator.Contains, sQuery));
             }
 
             // filter binding
@@ -42,6 +55,7 @@ sap.ui.define([
         getMainViewObject: function () {
             var oEntry = {
                 storageKey: "",
+                bSelected: false,
                 ProductCollection: [
                     { ProductId: "1000000", Category: "Laptops", SupplierName: "די.סי. פאק", Description: "הפוך גדול", },
 
@@ -70,13 +84,68 @@ sap.ui.define([
             return oEntry;
         },
 
+        onSelectedItems: function (bSelected) {
+
+            debugger;
+            var aFilter = [];
+
+            if (bSelected) {
+                aFilter.push(new Filter("isTouched", FilterOperator.EQ, bSelected));
+            }
+
+            // filter binding
+            var oList = this.byId("products");
+            var oBinding = oList.getBinding("items");
+            oBinding.filter(aFilter);
+        },
+
+        inputQuant: function (oEvent, sType) {
+            debugger;
+            var oRowData = oEvent.getSource().getBindingContext("createPoView").getObject();
+            var iCurrentQuant = oRowData.quantity;
+
+            if (iCurrentQuant > 0 && sType === "minus") {
+                iCurrentQuant = iCurrentQuant - 1;
+            } else if (sType === "add") {
+                iCurrentQuant = iCurrentQuant + 1;
+            }
+
+            oRowData.quantity = iCurrentQuant;
+
+            //touched row
+            if (iCurrentQuant > 0) {
+                oRowData.isTouched = true;
+            } else {
+                oRowData.isTouched = false;
+            }
+
+            //refresh model
+
+            this.getView().getModel("createPoView").refresh();
+        },
+
 
         mainViewModel: function () {
-            return new JSONModel(this.getMainViewObject());
+
+            var oEntry = this.getMainViewObject();
+
+            for (var i = 0; i < oEntry.ProductCollection.length; i++) {
+                oEntry.ProductCollection[i].quantity = 0;
+            }
+
+            return new JSONModel(oEntry);
+        },
+
+        onCreatePo : function (){
+            
         },
 
         _onRoutePoCreated: function () {
             debugger;
+
+            this.getView().setModel(this.mainViewModel(), "createPoView"); // clear model
         },
+
+
     });
 });

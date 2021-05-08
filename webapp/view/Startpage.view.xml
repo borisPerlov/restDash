@@ -24,7 +24,7 @@
 						</TileContent>
 					</tileContent>
 				</GenericTile>
-				<GenericTile
+				<!-- <GenericTile
 					class="sapUiTinyMarginBegin sapUiTinyMarginTop"
 					header="{i18n>startpagePFTileTitle}"
 					subheader="{i18n>startpagePFTileSubTitle}"
@@ -44,8 +44,8 @@
 							</content>
 						</TileContent>
 					</tileContent>
-				</GenericTile>
-				<GenericTile
+				</GenericTile> -->
+				<!-- <GenericTile
 					class="sapUiTinyMarginBegin sapUiTinyMarginTop"
 					header="{
 						parts: [
@@ -92,8 +92,8 @@
 							</content>
 						</TileContent>
 					</tileContent>
-				</GenericTile>
-				<GenericTile
+				</GenericTile> -->
+				<!-- <GenericTile
 					class="sapUiTinyMarginBegin sapUiTinyMarginTop"
 					header="{i18n>startpageUserReviewsTileTitle}"
 					press="onNavToReviews"
@@ -112,8 +112,8 @@
 							</content>
 						</TileContent>
 					</tileContent>
-				</GenericTile>
-				<GenericTile
+				</GenericTile> -->
+				<!-- <GenericTile
 					class="sapUiTinyMarginBegin sapUiTinyMarginTop"
 					header="{i18n>startpageTestResultsTileTitle}"
 					subheader="{i18n>startpageTestResultsTileSubTitle}"
@@ -126,8 +126,8 @@
 							</content>
 						</TileContent>
 					</tileContent>
-				</GenericTile>
-				<SlideTile
+				</GenericTile> -->
+				<!-- <SlideTile
 					class="sapUiTinyMarginBegin sapUiTinyMarginTop"
 					tiles="{news>/News}"
 				>
@@ -152,9 +152,9 @@
 							</TileContent>
 						</tileContent>
 					</GenericTile>
-				</SlideTile>
+				</SlideTile> -->
 			</layout:HorizontalLayout>
-			<Title
+			<!-- <Title
 				titleStyle="H2"
 				text="{i18n>startpageLinksGroupTitle}"
 				class="sapUiTinyMarginBegin sapUiMediumMarginTop"
@@ -173,7 +173,7 @@
 					press="onTilePressed"
 					class="sapUiTinyMarginBegin"
 				/>
-			</layout:HorizontalLayout>
+			</layout:HorizontalLayout> -->
 		</layout:VerticalLayout>
 	</Page>
 </mvc:View>

@@ -1,6 +1,6 @@
 sap.ui.define([
 	"jquery.sap.global",
-	"sap/ui/core/mvc/Controller",
+	"sap/suite/ui/commons/demo/tutorial/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/format/NumberFormat",
 	"sap/m/MessageToast",
@@ -10,9 +10,9 @@ sap.ui.define([
 
 	return Controller.extend("sap.suite.ui.commons.demo.tutorial.controller.Startpage", {
 		onInit: function() {
-			var sDataPath = sap.ui.require.toUrl("sap/suite/ui/commons/demo/tutorial/model/data/News.json");
-			var oModel = new JSONModel(sDataPath);
-			this.getView().setModel(oModel, "news");
+			// var sDataPath = sap.ui.require.toUrl("sap/suite/ui/commons/demo/tutorial/model/data/News.json");
+			// var oModel = new JSONModel(sDataPath);
+			// this.getView().setModel(oModel, "news");
 		},
 
 
@@ -35,11 +35,11 @@ sap.ui.define([
 		 *
 		 * @param {sap.ui.base.Event} event The SAPUI5 event object
 		 */
-		onNavToReviews: function (event) {
-			if (event.getSource().getState() === MobileLibrary.LoadState.Loaded) {
-				this.getRouter().navTo("reviews");
-			}
-		},
+		// onNavToReviews: function (event) {
+		// 	if (event.getSource().getState() === MobileLibrary.LoadState.Loaded) {
+		// 		this.getRouter().navTo("reviews");
+		// 	}
+		// },
 
 		/**
 		 * Handles the press event on a tile.

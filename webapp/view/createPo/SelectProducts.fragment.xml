@@ -3,6 +3,7 @@
 	xmlns:core="sap.ui.core"
 >
 	<Table
+		inset="false"
 		id="products"
 		items="{
 			path: 'createPoView>/ProductCollection'
@@ -10,26 +11,36 @@
 		}"
 	>
 		<headerToolbar>
-			<OverflowToolbar>
+			<Toolbar
+				class="sapUiNoContentPadding"
+				design="Solid"
+			>
 				<content>
 					<SearchField
 						liveChange=".onSearchProducts"
 						width="100%"
+						class="sapUiSmallmarginEnd"
 					/>
+					<CheckBox
+						select=".onSelectedItems(${createPoView>/bSelected})"
+						selected="{createPoView>/bSelected}"
+						text="{i18n>selectedItems}"
+					>
+					</CheckBox>
 				</content>
-			</OverflowToolbar>
+			</Toolbar>
 		</headerToolbar>
 		<columns>
-			<Column width="12em">
-				<Text text="ProductDesc"/>
+			<Column hAlign="Center">
+				<Text text="{i18n>matDesc}"/>
 			</Column>
 			<!-- minScreenWidth="Tablet"
 				demandPopin="true" -->
-			<Column>
-				<Text text="SupplierName"/>
+			<Column hAlign="Center">
+				<Text text="{i18n>vendorDesc}"/>
 			</Column>
-			<Column>
-				<Text text="Quantity"/>
+			<Column hAlign="Center">
+				<Text text="{i18n>qunatity}"/>
 			</Column>
 			<!-- <Column
 				minScreenWidth="Desktop"
@@ -58,13 +69,31 @@
 					/> -->
 					<Text text="{createPoView>Description}"/>
 					<Text text="{createPoView>SupplierName}"/>
-					<Input
-						type="Number"
-						placeholder="fill quantity"
-						value=""
-
+					<HBox
+						alignItems="Center"
+						justifyContent="SpaceBetween"
 					>
-					</Input>
+						<core:Icon
+							press="inputQuant($event, 'add')"
+							color="green"
+							src="sap-icon://add"
+						>
+						</core:Icon>
+						<Input
+							valueLiveUpdate="true"
+							width="4em"
+							class=""
+							type="Number"
+							value="{createPoView>quantity}"
+						>
+						</Input>
+						<core:Icon
+							press="inputQuant($event, 'minus')"
+							color="red"
+							src="sap-icon://sys-minus"
+						>
+						</core:Icon>
+					</HBox>
 					<!-- <ObjectNumber
 						number="{WeightMeasure}"
 						unit="{WeightUnit}"

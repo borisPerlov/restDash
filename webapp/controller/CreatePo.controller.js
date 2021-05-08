@@ -1,10 +1,12 @@
 sap.ui.define([
     "sap/suite/ui/commons/demo/tutorial/controller/BaseController",
+    "sap/suite/ui/commons/demo/tutorial/model/models",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
 ], function (
     Controller,
+    models,
     JSONModel,
     Filter,
     FilterOperator
@@ -136,8 +138,16 @@ sap.ui.define([
             return new JSONModel(oEntry);
         },
 
-        onCreatePo : function (){
-            
+        onCreatePo: function () {
+
+            var oEntry = this.prepareCreatePoEntry();
+            models.createPo(oEntry).then(function (data) {
+
+            })["catch"](function () {
+
+                alert("create Po is failed");
+
+            });
         },
 
         _onRoutePoCreated: function () {

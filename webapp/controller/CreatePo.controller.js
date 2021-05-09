@@ -139,15 +139,27 @@ sap.ui.define([
         },
 
         onCreatePo: function () {
-
+            debugger;
             var oEntry = this.prepareCreatePoEntry();
-            models.createPo(oEntry).then(function (data) {
+            models.createPoHeader(oEntry).then(function (data) {
 
             })["catch"](function () {
 
                 alert("create Po is failed");
 
             });
+        },
+
+        prepareCreatePoEntry: function () {
+
+
+            var oEntry = {
+                "MANDT": "dev",
+                "EBELN": "0000000004",
+                "CLIENT": "001"
+            };
+
+            return oEntry;
         },
 
         _onRoutePoCreated: function () {

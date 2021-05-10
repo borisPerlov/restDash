@@ -3,7 +3,8 @@
   "description": "",
   "scripts": {
     "start": "ui5 serve --config=ui5.yaml -o index.html?sap-language=HE",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "ui5 build"
   },
   "devDependencies": {
     "@ui5/cli": "^2.10.3",

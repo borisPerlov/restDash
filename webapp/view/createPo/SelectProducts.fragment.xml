@@ -74,24 +74,26 @@
 						justifyContent="SpaceBetween"
 					>
 						<core:Icon
-							press="inputQuant($event, 'add')"
-							color="green"
-							src="sap-icon://add"
+							size="1.5em"
+							press="inputQuant($event, 'minus')"
+							color="red"
+							src="sap-icon://sys-minus"
 						>
 						</core:Icon>
 						<Input
-							change = "inputQuant($event, 'change')"
+							change="inputQuant($event, 'change')"
 							valueLiveUpdate="true"
-							width="4em"
+							width="3em"
 							class=""
 							type="Number"
 							value="{createPoView>quantity}"
 						>
 						</Input>
 						<core:Icon
-							press="inputQuant($event, 'minus')"
-							color="red"
-							src="sap-icon://sys-minus"
+							size="1.5em"
+							press="inputQuant($event, 'add')"
+							color="green"
+							src="sap-icon://add"
 						>
 						</core:Icon>
 					</HBox>

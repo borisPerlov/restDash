@@ -59,18 +59,18 @@ sap.ui.define([
                 storageKey: "",
                 bSelected: false,
                 ProductCollection: [
-                    { ProductId: "1000000", Category: "Laptops", SupplierName: "די.סי. פאק", Description: "הפוך גדול", },
+                    { MATNR: "1000000", Category: "Laptops", SupplierName: "די.סי. פאק", Description: "הפוך גדול", MEINS: "EA", Vendor: "0000000001" },
 
-                    { ProductId: "1000001", Category: "Laptops", SupplierName: "די.סי. פאק", Description: "הפוך קטן" },
-                    { ProductId: "1000002", Category: "Laptops", SupplierName: "די.סי. פאק", Description: "אספרסו" },
-                    { ProductId: "1000003", Category: "Laptops", SupplierName: "רונן", Description: "צלחות זכוכות קטן" },
-                    { ProductId: "1000004", Category: "Accessories", SupplierName: "רונן", Description: "צלחות זכוכות גדול" },
-                    { ProductId: "1000005", Category: "Accessories", SupplierName: "דפוס מאי", Description: "תחתית המבורגר" },
-                    { ProductId: "1000006", Category: "Laptops", SupplierName: "דפוס מאי", Description: "מכסה המבורגר" },
-                    { ProductId: "1000007", Category: "Accessories", SupplierName: "דפוס מאי", Description: "מארז שניצל" },
-                    { ProductId: "1000008", Category: "Accessories", SupplierName: "רונן", Description: "קוקוטים" },
-                    { ProductId: "1000009", Category: "Accessories", SupplierName: "רונן", Description: "קוקוטים קטנים " },
-                    { ProductId: "1000010", Category: "Accessories", SupplierName: "רונן", Description: "בוחשני עץ 1" },
+                    { MATNR: "1000001", Category: "Laptops", SupplierName: "די.סי. פאק", Description: "הפוך קטן", MEINS: "EA", Vendor: "0000000001" },
+                    { MATNR: "1000002", Category: "Laptops", SupplierName: "די.סי. פאק", Description: "אספרסו", MEINS: "EA", Vendor: "0000000001" },
+                    { MATNR: "1000003", Category: "Laptops", SupplierName: "רונן", Description: "צלחות זכוכות קטן", MEINS: "EA", Vendor: "0000000002" },
+                    { MATNR: "1000004", Category: "Accessories", SupplierName: "רונן", Description: "צלחות זכוכות גדול", MEINS: "EA", Vendor: "0000000002" },
+                    { MATNR: "1000005", Category: "Accessories", SupplierName: "דפוס מאי", Description: "תחתית המבורגר", MEINS: "EA", Vendor: "0000000003" },
+                    { MATNR: "1000006", Category: "Laptops", SupplierName: "דפוס מאי", Description: "מכסה המבורגר", MEINS: "EA", Vendor: "0000000003" },
+                    { MATNR: "1000007", Category: "Accessories", SupplierName: "דפוס מאי", Description: "מארז שניצל", MEINS: "EA", Vendor: "0000000003" },
+                    { MATNR: "1000008", Category: "Accessories", SupplierName: "רונן", Description: "קוקוטים", MEINS: "EA", Vendor: "0000000002" },
+                    { MATNR: "1000009", Category: "Accessories", SupplierName: "רונן", Description: "קוקוטים קטנים ", MEINS: "EA", Vendor: "0000000002" },
+                    { MATNR: "1000010", Category: "Accessories", SupplierName: "רונן", Description: "בוחשני עץ 1", MEINS: "EA", Vendor: "0000000002" },
 
                 ],
                 StorageLocationList: [{
@@ -138,10 +138,36 @@ sap.ui.define([
             return new JSONModel(oEntry);
         },
 
+        _checkError: function (aMessages) {
+
+            var bError = false;
+
+            for (var i = 0; i < aMessages.length; i++) {
+
+                if (aMessages[i].type === "E") {
+                    bError = true;
+                    break;
+                }
+
+            }
+
+            return bError;
+        },
+
         onCreatePo: function () {
-            debugger;
-            var oEntry = this.prepareCreatePoEntry();
-            models.createPoHeader(oEntry).then(function (data) {
+
+            var oPoViewData = this.getView().getModel("createPoView").getData();
+            var oEntry = this.prepareCreatePoEntry(oPoViewData);
+            var that = this;
+            models.createPo(oEntry).then(function (data) {
+
+                var bError = that._checkError(data.aReturn);
+
+                if (bError) {
+                    alert("errors exist");
+                } else {
+                    that.getRouter().navTo("home", {}, true /*no history*/);
+                }
 
             })["catch"](function () {
 
@@ -150,14 +176,39 @@ sap.ui.define([
             });
         },
 
-        prepareCreatePoEntry: function () {
+        prepareCreatePoEntry: function (oPoViewData) {
 
 
             var oEntry = {
-                "MANDT": "dev",
-                "EBELN": "0000000004",
-                "CLIENT": "001"
+
             };
+
+            //header
+
+            oEntry.header = {
+                "MANDT": "dev",
+                "CLIENT": "001"
+            }
+
+
+            //items
+
+            oEntry.items = [];
+            for (var i = 0; i < oPoViewData.ProductCollection.length; i++) {
+                if (oPoViewData.ProductCollection[i].quantity) {
+                    oEntry.items.push({
+                        MANDT: "dev",
+                        CLIENT: "001",
+                        MATNR: oPoViewData.ProductCollection[i].MATNR,
+                        TXZ01: oPoViewData.ProductCollection[i].Description,
+                        LGORT: oPoViewData.storageKey,
+                        MENGE: oPoViewData.ProductCollection[i].quantity,
+                        MEINS: oPoViewData.ProductCollection[i].MEINS,
+                        VENDOR: oPoViewData.ProductCollection[i].Vendor,
+                    });
+                }
+
+            }
 
             return oEntry;
         },

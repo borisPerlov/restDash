@@ -14,11 +14,11 @@ sap.ui.define([
 
 
 
-		createPoHeader: function(oEntry){
-									
+		createPo: function (oEntry) {
 
-		 var serviceUrl = "http://localhost:3000/" + 'po_header';							
-									
+
+			var serviceUrl = "http://localhost:3000/" + 'po';
+
 			return new Promise(function (resolve) {
 				$.ajax({
 					type: "POST",
@@ -27,13 +27,14 @@ sap.ui.define([
 					url: serviceUrl,
 					processData: true,
 					data: oEntry,
+					contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 
 
 
 					success: function (data) {
-						debugger;
 
-						
+
+						resolve(data);
 					},
 
 					error: function (error) {
@@ -41,7 +42,7 @@ sap.ui.define([
 					}
 				});
 			});
-									
-								},
+
+		},
 	};
 });

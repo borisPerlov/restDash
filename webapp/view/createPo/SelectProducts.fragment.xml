@@ -80,6 +80,7 @@
 						>
 						</core:Icon>
 						<Input
+							change = "inputQuant($event, 'change')"
 							valueLiveUpdate="true"
 							width="4em"
 							class=""

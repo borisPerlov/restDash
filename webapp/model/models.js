@@ -14,8 +14,6 @@ sap.ui.define([
 
 
 
-<<<<<<< HEAD
-=======
 		createPo: function (oEntry) {
 
 
@@ -46,6 +44,5 @@ sap.ui.define([
 			});
 
 		},
->>>>>>> ea69f291a83c1bc956d4089761aadb11a40301d8
 	};
 });

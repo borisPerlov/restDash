@@ -1,17 +1,28 @@
-name: CI
+name: Node CI
 
 on: [push]
 
 jobs:
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    runs-on: [ubuntu-latest]
+  build:
+
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
-      - name: Push to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          script: cd ${{ secrets.PROJECT_PATH }} && git pull origin main
+    # - uses: actions/checkout@v1
+    # - name: Install Node.js
+    #   uses: actions/setup-node@v1
+    #   with:
+    #     node-version: '10.x'
+    # - name: Install npm dependencies
+    #   run: npm install
+    # - name: Run build task
+    #   run: npm run build --if-present
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "/webapp"
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}

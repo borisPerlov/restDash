@@ -1,7 +1,7 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/suite/ui/commons/demo/tutorial/model/models"
-], function(UIComponent, models) {
+], function (UIComponent, models) {
 	"use strict";
 
 	return UIComponent.extend("sap.suite.ui.commons.demo.tutorial.Component", {
@@ -15,7 +15,7 @@ sap.ui.define([
 		 * @public
 		 * @override
 		 */
-		init: function() {
+		init: function () {
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
 
@@ -24,8 +24,11 @@ sap.ui.define([
 
 			// create the views based on the url/hash
 			this.getRouter().initialize();
+
+
+			sap.ui.getCore().getConfiguration().setLanguage("HE");
 		},
-		createContent: function() {
+		createContent: function () {
 			// create root view
 			return sap.ui.view("AppView", {
 				viewName: "sap.suite.ui.commons.demo.tutorial.view.App",

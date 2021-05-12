@@ -4,12 +4,14 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox",
 ], function (
     Controller,
     models,
     JSONModel,
     Filter,
-    FilterOperator
+    FilterOperator,
+    MessageBox
 ) {
     "use strict";
 
@@ -41,8 +43,26 @@ sap.ui.define([
             var aFilter = [];
             var sQuery = oEvent.getParameter("newValue");
             if (sQuery) {
-                aFilter.push(new Filter("Description", FilterOperator.Contains, sQuery));
-                aFilter.push(new Filter("SupplierName", FilterOperator.Contains, sQuery));
+                // aFilter.push(new Filter("Description", FilterOperator.Contains, sQuery));
+                // aFilter.push(new Filter("SupplierName", FilterOperator.Contains, sQuery));
+
+                aFilter = new Filter({
+                    filters: [
+
+                        new Filter({
+                            path: 'Description',
+                            operator: FilterOperator.Contains,
+                            value1: sQuery
+                        }),
+                        new Filter({
+                            path: 'SupplierName',
+                            operator: FilterOperator.Contains,
+                            value1: sQuery
+                        })
+
+                    ],
+                    and: false
+                });
             }
 
             // filter binding
@@ -88,7 +108,6 @@ sap.ui.define([
 
         onSelectedItems: function (bSelected) {
 
-            debugger;
             var aFilter = [];
 
             if (bSelected) {
@@ -102,7 +121,7 @@ sap.ui.define([
         },
 
         inputQuant: function (oEvent, sType) {
-            debugger;
+
             var oRowData = oEvent.getSource().getBindingContext("createPoView").getObject();
             var iCurrentQuant = oRowData.quantity;
 
@@ -159,6 +178,8 @@ sap.ui.define([
             var oPoViewData = this.getView().getModel("createPoView").getData();
             var oEntry = this.prepareCreatePoEntry(oPoViewData);
             var that = this;
+            var oComponent = this.getOwnerComponent();
+            var i18n = oComponent.getModel("i18n");
             models.createPo(oEntry).then(function (data) {
 
                 var bError = that._checkError(data.aReturn);
@@ -166,7 +187,30 @@ sap.ui.define([
                 if (bError) {
                     alert("errors exist");
                 } else {
-                    that.getRouter().navTo("home", {}, true /*no history*/);
+
+                    debugger;
+                    var msg = i18n.getProperty("poCreated") + "\n";
+
+                    for (var i = 0; i < data.aReturn.length; i++) {
+                        msg = msg + data.aReturn[i].message + "\n";
+                    }
+
+                    MessageBox.success(
+                        msg,
+                        {
+                            actions: [sap.m.MessageBox.Action.OK],
+
+                            onClose: function (sAction) {
+
+
+                                that.getRouter().navTo("home", {}, true /*no history*/);
+                            }
+                        }
+                    );
+
+
+
+
                 }
 
             })["catch"](function () {

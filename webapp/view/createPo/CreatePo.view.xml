@@ -29,7 +29,7 @@
 							items="{createPoView>/StorageLocationList}"
 							forceSelection="false"
 							selectedKey="{createPoView>/storageKey}"
-							width="100%"
+							width="auto"
 						>
 							<items>
 								<core:ListItem
@@ -174,7 +174,7 @@
 						type="Accept"
 						text="{i18n>createOrder}"
 						press=".onCreatePo"
-					/> 
+					/>
 				</OverflowToolbar>
 			</footer>
 		</Page>

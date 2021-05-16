@@ -176,10 +176,25 @@ sap.ui.define([
         onCreatePo: function () {
 
             var oPoViewData = this.getView().getModel("createPoView").getData();
-            var oEntry = this.prepareCreatePoEntry(oPoViewData);
-            var that = this;
             var oComponent = this.getOwnerComponent();
             var i18n = oComponent.getModel("i18n");
+
+            //validation
+            if (!oPoViewData.storageKey) {
+                var msg = i18n.getProperty("selectStorage");
+
+                MessageBox.error(msg);
+
+                return;
+            }
+
+            var oEntry = this.prepareCreatePoEntry(oPoViewData);
+            var that = this;
+
+
+
+
+
             models.createPo(oEntry).then(function (data) {
 
                 var bError = that._checkError(data.aReturn);
@@ -261,6 +276,17 @@ sap.ui.define([
             debugger;
 
             this.getView().setModel(this.mainViewModel(), "createPoView"); // clear model
+
+
+
+            //reset wizard progress
+            var oWizard = this.byId("CreatePoWizard");
+            var oFirstStep = oWizard.getSteps()[0];
+            oWizard.discardProgress(oFirstStep);
+            // scroll to top
+            oWizard.goToStep(oFirstStep);
+            // invalidate first step
+            oFirstStep.setValidated(false);
         },
 
 
